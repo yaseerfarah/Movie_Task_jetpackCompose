@@ -18,14 +18,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moviecompose.base.presentations.ui.theme.MovieComposeTheme
 import com.example.moviecompose.core.navigation.MainFlow
+import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
 import com.example.moviecompose.modules.home.presentation.navigation.HomeNavHost
 import com.example.moviecompose.modules.splash.presentation.view.SplashScreen
 import com.example.moviecompose.modules.splash.presentation.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var mainNavigationCoordinator: MainNavigationCoordinator
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +43,10 @@ class MainActivity : ComponentActivity() {
 
                 ) {
                     val navController = rememberNavController()
+                    mainNavigationCoordinator.init(navController)
                     NavHost(navController =navController ,startDestination = MainFlow.Root.route){
                         composable(route = MainFlow.Root.route) {
-                            val viewModel = hiltViewModel<SplashViewModel>()
-                            SplashScreen(viewModel = viewModel, callNextScreen = {
-                                Log.e("SplashScreen","SplashScreenNavigate")
-                                navController.navigate(HomeFlow.Root.route) {
-                                    popUpTo(MainFlow.Root.route) {
-                                        inclusive = true
-                                    }
-                                }
-                            })
+                            SplashScreen()
                         }
 
                         HomeNavHost(navController)

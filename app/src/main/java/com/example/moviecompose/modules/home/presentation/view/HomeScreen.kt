@@ -42,11 +42,7 @@ fun HomeScreen(
     }
 
     HorizontalPager(modifier = Modifier.fillMaxSize(),count = uiModel.value.screensCount, state = pagerState) { page ->
-        MovieListScreen(currentPage=page) {
-            coroutineScope.launch {
-                callNextScreen()
-            }
-        }
+        MovieListScreen(currentPage=page,viewModel.mainNavigationCoordinator)
 
 
     }

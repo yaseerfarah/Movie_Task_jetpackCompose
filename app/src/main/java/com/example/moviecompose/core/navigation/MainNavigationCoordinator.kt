@@ -4,14 +4,16 @@ import android.content.Context
 import androidx.navigation.NavController
 import com.example.moviecompose.base.presentations.navigation.NavigationCoordinator
 import javax.inject.Inject
+import javax.inject.Singleton
 
- class MainNavigationCoordinator @Inject constructor(val mainFlowNavigation: MainFlowNavigation): NavigationCoordinator<MainNavigationEvent>() {
+@Singleton
+ open class MainNavigationCoordinator @Inject constructor(val mainFlowNavigation: MainFlowNavigation): NavigationCoordinator<MainNavigationEvent>() {
      override fun init(param: Any) {
          mainFlowNavigation.setNavController(param as NavController)
      }
 
      override fun onStart(context: Context?, param: Any?) {
-
+         mainFlowNavigation.goToHomeScreen()
      }
 
      override fun onEvent(event: MainNavigationEvent) {

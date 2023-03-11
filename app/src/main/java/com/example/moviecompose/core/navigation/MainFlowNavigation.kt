@@ -1,9 +1,13 @@
 package com.example.moviecompose.core.navigation
 
+import android.util.Log
 import androidx.navigation.NavController
 import com.example.moviecompose.base.presentations.navigation.NavigationCoordinator
+import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MainFlowNavigation @Inject constructor(){
 
     private lateinit var navController: NavController
@@ -19,6 +23,15 @@ class MainFlowNavigation @Inject constructor(){
 
     fun onDetailsBackPress() {
         navController.popBackStack()
+    }
+
+    fun goToHomeScreen() {
+        Log.e("SplashScreen","SplashScreenNavigate")
+        navController.navigate(HomeFlow.Root.route) {
+            popUpTo(MainFlow.Root.route) {
+                inclusive = true
+            }
+        }
     }
 
 }

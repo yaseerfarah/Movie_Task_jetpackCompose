@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEvents
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiModel
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModel
@@ -25,7 +26,7 @@ import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieL
 @Composable
 fun MovieListScreen(
     currentPage:Int,
-    onItemClick:()->Unit
+    mainNavigationCoordinator: MainNavigationCoordinator
 ) {
 
     val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString())

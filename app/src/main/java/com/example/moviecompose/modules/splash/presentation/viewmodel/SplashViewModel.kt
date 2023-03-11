@@ -3,6 +3,7 @@ package com.example.moviecompose.modules.splash.presentation.viewmodel
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.example.moviecompose.base.presentations.viewmodel.StateViewModel
+import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 import com.example.moviecompose.modules.splash.presentation.uimodel.SplashUIEffects
 import com.example.moviecompose.modules.splash.presentation.uimodel.SplashUIEvents
 import com.example.moviecompose.modules.splash.presentation.uimodel.SplashUiModel
@@ -15,7 +16,7 @@ import java.sql.Time
 import javax.inject.Inject
 
 @HiltViewModel
-class SplashViewModel @Inject constructor(@ApplicationContext context: Context):
+class SplashViewModel @Inject constructor(@ApplicationContext context: Context,val mainNavigationCoordinator: MainNavigationCoordinator):
     StateViewModel<SplashUiModel,SplashUiState,SplashUIEffects,SplashUIEvents>(SplashUiState()) {
 
 
@@ -41,7 +42,8 @@ class SplashViewModel @Inject constructor(@ApplicationContext context: Context):
         viewModelScope.launch {
             delay(2000)
             updateState(SplashUiState(passToNextScreen = true))
-            updateEffect(SplashUIEffects.PassToNextScreen)
+           // updateEffect(SplashUIEffects.PassToNextScreen)
+            mainNavigationCoordinator.onStart()
         }
     }
 

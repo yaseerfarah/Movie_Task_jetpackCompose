@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.moviecompose.R
 import com.example.moviecompose.base.presentations.viewmodel.HandleEffect
@@ -25,18 +26,17 @@ import com.example.moviecompose.modules.splash.presentation.viewmodel.SplashView
 @ExperimentalMaterial3Api
 @Composable
 fun SplashScreen(
-    viewModel:SplashViewModel,
-    callNextScreen:()->Unit
+    viewModel:SplashViewModel= hiltViewModel()
 ) {
     
     val uiModel=viewModel.uiModel.collectAsStateWithLifecycle()
 
 
-    HandleEffect(viewModel){
-        when(it){
-            is SplashUIEffects.PassToNextScreen->{callNextScreen()}
-        }
-    }
+//    HandleEffect(viewModel){
+//        when(it){
+//            is SplashUIEffects.PassToNextScreen->{callNextScreen()}
+//        }
+//    }
 
     LaunchedEffect(uiModel){
         viewModel.sendEvent(SplashUIEvents.StartTimer)
