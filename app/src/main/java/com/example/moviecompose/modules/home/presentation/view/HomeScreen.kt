@@ -41,57 +41,14 @@ fun HomeScreen(
         }
     }
 
-    Scaffold(
-        topBar = {
-            SmallTopAppBar(
-                title = {
-                    Text(text = "Movie Compose")
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    scrolledContainerColor = MaterialTheme.colorScheme.surface
-                ),
-            )
-        },
-        content = {
-            Column (modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White), horizontalAlignment = Alignment.CenterHorizontally){
-                HorizontalPager(modifier = Modifier.weight(1f),count = uiModel.value.screensCount, state = pagerState) { page ->
-                    when(currentPage){
-                        0->{MovieListScreen(currentPage=currentPage) {
-                            coroutineScope.launch {
-                                callNextScreen()
-                            }
-                        }}
-                        1->{MovieListScreen(currentPage=currentPage) {
-                            coroutineScope.launch {
-                                callNextScreen()
-                            }
-                        }}
-                        2->{MovieListScreen(currentPage=currentPage) {
-                            coroutineScope.launch {
-                                callNextScreen()
-                            }
-                        }}
-                    }
-
-
-                }
-
-                Spacer(modifier = Modifier
-                    .weight(0.1f)
-                    .padding(4.dp))
-
-                DotsIndicator(
-                    modifier = Modifier.weight(0.1f),
-                    totalDots = 3,
-                    selectedIndex = pagerState.currentPage,
-                    selectedColor = Color.White,
-                    unSelectedColor = Color.Gray
-                )
+    HorizontalPager(modifier = Modifier.fillMaxSize(),count = uiModel.value.screensCount, state = pagerState) { page ->
+        MovieListScreen(currentPage=page) {
+            coroutineScope.launch {
+                callNextScreen()
             }
-            }
+        }
 
-    )
+
+    }
 
 }

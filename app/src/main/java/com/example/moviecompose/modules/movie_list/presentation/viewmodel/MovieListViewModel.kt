@@ -13,7 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(@ApplicationContext context: Context):
+class MovieListViewModel @Inject constructor():
     StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects,MovieListUIEvents>(MovieListUiState(screensCount = 3,
         currentData = null, loadContents = true
     )) {

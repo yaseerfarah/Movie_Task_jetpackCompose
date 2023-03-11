@@ -17,8 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.moviecompose.base.presentations.ui.theme.MovieComposeTheme
-import com.example.moviecompose.core.navigation.HomeFlow
 import com.example.moviecompose.core.navigation.MainFlow
+import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
 import com.example.moviecompose.modules.home.presentation.navigation.HomeNavHost
 import com.example.moviecompose.modules.splash.presentation.view.SplashScreen
 import com.example.moviecompose.modules.splash.presentation.viewmodel.SplashViewModel

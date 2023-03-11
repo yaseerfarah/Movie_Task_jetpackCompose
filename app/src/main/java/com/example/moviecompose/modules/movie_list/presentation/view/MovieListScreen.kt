@@ -1,5 +1,6 @@
 package com.example.moviecompose.modules.home.presentation.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEvents
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiModel
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModel
@@ -26,8 +28,9 @@ fun MovieListScreen(
     onItemClick:()->Unit
 ) {
 
-    val viewModel = hiltViewModel<MovieListViewModel>()
+    val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString())
     val listUiModel=viewModel.uiModel.collectAsStateWithLifecycle()
+    Log.e("MovieListScreen","MovieListScreen >>>> ${viewModel.hashCode()}")
     LaunchedEffect(viewModel){
         viewModel.sendEvent(MovieListUIEvents.getData(currentPage))
     }
