@@ -1,8 +1,10 @@
 package com.example.moviecompose.modules.home.presentation.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +23,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterial3Api
 @Composable
@@ -32,19 +35,43 @@ fun HomeScreen(
     val uiModel=viewModel.uiModel.collectAsStateWithLifecycle()
     val pagerState= rememberPagerState()
     val coroutineScope= rememberCoroutineScope()
-    var currentPage= remember {
-        0
-    }
-    LaunchedEffect(pagerState){
-        snapshotFlow { pagerState.currentPage }.collect(){
-            currentPage=it
-        }
-    }
+    val tabIndex = pagerState.currentPage
 
-    HorizontalPager(modifier = Modifier.fillMaxSize(),count = uiModel.value.screensCount, state = pagerState) { page ->
-        MovieListScreen(currentPage=page,viewModel.mainNavigationCoordinator)
+   Scaffold(
+       modifier = Modifier.fillMaxSize(),
 
 
-    }
+   ) {
+       Column(modifier = Modifier.fillMaxSize()) {
+
+           TabRow(
+               selectedTabIndex = tabIndex,
+               indicator = { tabPositions ->
+                   TabRowDefaults.Indicator(
+                       Modifier.tabIndicatorOffset(tabPositions[tabIndex])
+                   )
+               }
+           ) {
+               uiModel.value.tabList.forEachIndexed { index, pair ->
+                   Tab(selected = tabIndex == index, onClick = {
+                       coroutineScope.launch {
+                           pagerState.animateScrollToPage(index)
+                       }
+                   }, text = {
+                       Text(text = pair)
+                   })
+               }
+           }
+
+           HorizontalPager(modifier = Modifier.weight(weight = 1f),count = uiModel.value.tabList.count(), state = pagerState) { page ->
+               MovieListScreen(currentPage=page,viewModel.mainNavigationCoordinator)
+           }
+       }
+
+   }
+
+
+
+
 
 }

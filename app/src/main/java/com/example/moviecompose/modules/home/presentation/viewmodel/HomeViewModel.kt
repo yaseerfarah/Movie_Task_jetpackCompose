@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(@ApplicationContext context: Context,val mainNavigationCoordinator: MainNavigationCoordinator):
-    StateViewModel<HomeUiModel, HomeUiState, HomeUIEffects,HomeUIEvents>(HomeUiState(screensCount = 3)) {
+    StateViewModel<HomeUiModel, HomeUiState, HomeUIEffects,HomeUIEvents>(HomeUiState(tabList = listOf("First","Second","Third"))) {
 
 
 
@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(@ApplicationContext context: Context,val
     override fun mapStateToUIModel(oldState: HomeUiState, newState: HomeUiState): HomeUiModel {
         return  with(newState){
             HomeUiModel(
-                screensCount=screensCount,
+                tabList=tabList,
                 errorMsg=errorMsg
             )
         }

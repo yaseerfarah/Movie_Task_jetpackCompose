@@ -3,15 +3,16 @@ package com.example.moviecompose.modules.home.presentation.view
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -36,19 +37,22 @@ fun MovieListScreen(
         viewModel.sendEvent(MovieListUIEvents.getData(currentPage))
     }
 
-    Column (
+
+
+    LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        columns = GridCells.Fixed(2)
     ){
-        listUiModel.value.currentData?.let {
-            Image(painter = painterResource(id = it)
-                , contentDescription ="MovieListScreen",
-            )
+
+        items(3){
+            MovieItem(modifier = Modifier.fillMaxSize(), imageLink = listUiModel.value.currentData) {
+
+            }
         }
 
     }
+
 
 }
