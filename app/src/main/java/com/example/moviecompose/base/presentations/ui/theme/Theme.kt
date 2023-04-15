@@ -10,19 +10,21 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
+    primary = Color.Red,
     secondary = PurpleGrey80,
     tertiary = Pink80
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Color.Red,
     secondary = PurpleGrey40,
     tertiary = Pink40
 
@@ -59,6 +61,9 @@ fun MovieComposeTheme(
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }
+//    val systemUiController = rememberSystemUiController()
+//    systemUiController.setStatusBarColor(color = Color.Red)
+//    systemUiController.setSystemBarsColor(color = Color.Red)
 
     MaterialTheme(
         colorScheme = colorScheme,

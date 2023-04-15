@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -23,6 +24,7 @@ import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
 import com.example.moviecompose.modules.home.presentation.navigation.HomeNavHost
 import com.example.moviecompose.modules.splash.presentation.view.SplashScreen
 import com.example.moviecompose.modules.splash.presentation.viewmodel.SplashViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,6 +44,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
 
                 ) {
+
                     val navController = rememberNavController()
                     mainNavigationCoordinator.init(navController)
                     NavHost(navController =navController ,startDestination = MainFlow.Root.route){
