@@ -20,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.moviecompose.base.presentations.ui.theme.MovieComposeTheme
 import com.example.moviecompose.core.navigation.MainFlow
 import com.example.moviecompose.core.navigation.MainNavigationCoordinator
+import com.example.moviecompose.modules.details.presentation.navigation.DetailsNavHost
 import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
 import com.example.moviecompose.modules.home.presentation.navigation.HomeNavHost
 import com.example.moviecompose.modules.splash.presentation.view.SplashScreen
@@ -53,6 +54,8 @@ class MainActivity : ComponentActivity() {
                         }
 
                         HomeNavHost(navController)
+
+                        DetailsNavHost(navController)
 
                     }
                 }

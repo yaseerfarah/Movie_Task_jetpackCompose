@@ -1,20 +1,19 @@
 package com.example.moviecompose.modules.movie_list.presentation.viewmodel
 
-import android.content.Context
 import android.util.Log
-import com.example.moviecompose.R
 import com.example.moviecompose.base.presentations.viewmodel.StateViewModel
+import com.example.moviecompose.core.navigation.MainNavigationCoordinator
+import com.example.moviecompose.core.navigation.MainNavigationEvent
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEffects
-import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEvents
+import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUIEvents
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiModel
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor():
-    StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects,MovieListUIEvents>(MovieListUiState(screensCount = 3,
+class MovieListViewModel @Inject constructor(private val mainNavigationCoordinator: MainNavigationCoordinator):
+    StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects, MovieListUIEvents>(MovieListUiState(screensCount = 3,
         currentData = null, loadContents = true
     )) {
 
@@ -24,6 +23,9 @@ class MovieListViewModel @Inject constructor():
     override fun sendEvent(event: MovieListUIEvents) {
         when(event){
             is MovieListUIEvents.getData->{getData(event.page) }
+            is MovieListUIEvents.navigateToDetailsScreen->{mainNavigationCoordinator.onEvent(
+                MainNavigationEvent.NavigateToDetailsScreen(event.imageLink)
+            )}
             else -> {}
         }
     }

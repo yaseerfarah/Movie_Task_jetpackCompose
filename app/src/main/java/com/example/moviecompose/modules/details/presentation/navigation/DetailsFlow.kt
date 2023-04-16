@@ -9,7 +9,7 @@ sealed class DetailsFlow(val name:String){
     object Root:DetailsFlow("details-root"){
         val route = "$name?$ARG_MOVIE_ID={$ARG_MOVIE_ID}"
 
-        fun route(movieId:String):String{
+        fun route(movieId:String?):String{
             return "$name?$ARG_MOVIE_ID=${movieId}"
         }
 

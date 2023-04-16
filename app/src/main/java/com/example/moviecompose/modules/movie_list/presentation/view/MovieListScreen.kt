@@ -1,4 +1,4 @@
-package com.example.moviecompose.modules.home.presentation.view
+package com.example.moviecompose.modules.movie_list.presentation.view
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -13,9 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moviecompose.core.navigation.MainNavigationCoordinator
-import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEvents
+import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUIEvents
 import com.example.moviecompose.modules.movie_list.presentation.cells.MovieItem
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModel
+import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModelFactory
 
 
 @ExperimentalMaterial3Api
@@ -25,7 +26,7 @@ fun MovieListScreen(
     mainNavigationCoordinator: MainNavigationCoordinator
 ) {
 
-    val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString())
+    val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString(), factory = MovieListViewModelFactory(mainNavigationCoordinator))
     val listUiModel=viewModel.uiModel.collectAsStateWithLifecycle()
     Log.e("MovieListScreen","MovieListScreen >>>> ${viewModel.hashCode()}")
     LaunchedEffect(viewModel){
@@ -43,7 +44,7 @@ fun MovieListScreen(
 
         items(3){
             MovieItem(modifier = Modifier.fillMaxSize(), imageLink = listUiModel.value.currentData) {
-
+                viewModel.sendEvent(MovieListUIEvents.navigateToDetailsScreen(it))
             }
         }
 
