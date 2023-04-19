@@ -7,6 +7,9 @@ import com.example.moviecompose.modules.core.domain.entity.CategoryEntity
 import com.example.moviecompose.modules.core.domain.entity.CategoryWithMoviesEntity
 import com.example.moviecompose.modules.core.domain.repository.MovieRepository
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
 class MovieRepositoryImp@Inject constructor(
@@ -16,7 +19,12 @@ class MovieRepositoryImp@Inject constructor(
 ):MovieRepository {
     override suspend fun getAllCategories(): List<CategoryEntity> {
         val isDataInRoom=movieRoomSource.getAllMovies().isNotEmpty()
-        return movieApiSource.getAllCategories()
+       return if (checkValidateData()&&isDataInRoom)
+           movieRoomSource.getAllCategories()
+       else
+           movieApiSource.getAllCategories()
+
+
     }
 
     override suspend fun getAllMoviesByCategoryId(categoryModel: CategoryEntity): CategoryWithMoviesEntity? {
@@ -24,8 +32,12 @@ class MovieRepositoryImp@Inject constructor(
     }
 
 
-//    private fun checkValidateData():Boolean{
-//        return System.currentTimeMillis()<(dataStoreHelper.get<Long>(DataStoreHelper.LAST_UPDATE,0)+DataStoreHelper.MILLIS_UNTIL_PROMPT)
-//    }
+    private suspend fun checkValidateData():Boolean{
+        return  coroutineScope {
+            val lastTime=dataStoreHelper.getData<Long>(DataStoreHelper.LAST_UPDATE).last()?:0
+            System.currentTimeMillis()<(lastTime+DataStoreHelper.MILLIS_UNTIL_PROMPT)
+        }
+
+    }
 
 }
