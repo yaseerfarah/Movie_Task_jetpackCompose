@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUIEvents
 import com.example.moviecompose.modules.movie_list.presentation.cells.MovieItem
+import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListInjectionProvider
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModel
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListViewModelFactory
 
@@ -23,10 +24,10 @@ import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieL
 @Composable
 fun MovieListScreen(
     currentPage:Int,
-    mainNavigationCoordinator: MainNavigationCoordinator
+    movieListInjectionProvider: MovieListInjectionProvider
 ) {
 
-    val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString(), factory = MovieListViewModelFactory(mainNavigationCoordinator))
+    val viewModel = viewModel<MovieListViewModel>(key = currentPage.toString(), factory = MovieListViewModelFactory(movieListInjectionProvider))
     val listUiModel=viewModel.uiModel.collectAsStateWithLifecycle()
     Log.e("MovieListScreen","MovieListScreen >>>> ${viewModel.hashCode()}")
     LaunchedEffect(viewModel){

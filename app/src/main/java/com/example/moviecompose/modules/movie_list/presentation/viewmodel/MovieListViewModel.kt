@@ -12,7 +12,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(private val mainNavigationCoordinator: MainNavigationCoordinator):
+class MovieListViewModel @Inject constructor(
+    private val mainNavigationCoordinator: MainNavigationCoordinator,
+
+):
     StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects, MovieListUIEvents>(MovieListUiState(screensCount = 3,
         currentData = null, loadContents = true
     )) {

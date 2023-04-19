@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 
-class MovieListViewModelFactory(val mainNavigationCoordinator: MainNavigationCoordinator):ViewModelProvider.Factory {
+class MovieListViewModelFactory(val movieListInjectionProvider: MovieListInjectionProvider):ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MovieListViewModel(mainNavigationCoordinator = mainNavigationCoordinator) as T
+        return MovieListViewModel(mainNavigationCoordinator = movieListInjectionProvider.mainNavigationCoordinator) as T
     }
 }

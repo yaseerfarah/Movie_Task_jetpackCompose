@@ -8,10 +8,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.moviecompose.R
 import com.example.moviecompose.modules.home.presentation.viewmodel.HomeViewModel
 import com.example.moviecompose.modules.movie_list.presentation.view.MovieListScreen
+import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListInjectionProvider
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -28,6 +30,7 @@ fun HomeScreen(
 ) {
     
     val uiModel=viewModel.uiModel.collectAsStateWithLifecycle()
+    val movieListInjectionProvider = hiltViewModel<MovieListInjectionProvider>()
     val pagerState= rememberPagerState()
     val coroutineScope= rememberCoroutineScope()
     val tabIndex = pagerState.currentPage
@@ -75,7 +78,7 @@ fun HomeScreen(
            }
 
            HorizontalPager(modifier = Modifier.weight(weight = 1f),count = uiModel.value.tabList.count(), state = pagerState) { page ->
-               MovieListScreen(currentPage=page,viewModel.mainNavigationCoordinator)
+               MovieListScreen(currentPage=page,movieListInjectionProvider)
            }
        }
 
