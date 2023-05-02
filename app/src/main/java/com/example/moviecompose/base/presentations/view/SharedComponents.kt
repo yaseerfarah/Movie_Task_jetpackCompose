@@ -1,5 +1,6 @@
 package com.example.moviecompose.base.presentations.view
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.transform.Transformation
+import com.example.moviecompose.BuildConfig
 import com.example.moviecompose.R
 import java.lang.Math.ceil
 import java.lang.Math.floor
@@ -76,11 +78,14 @@ fun DotsIndicator(
 fun ImageWithLoadingProgress(
     modifier: Modifier=Modifier,
     imageLink:String?,
-    transformations: List<Transformation> = listOf()
+    transformations: List<Transformation> = listOf(),
+    content:(@Composable BoxScope.()->Unit)?=null
 ) {
+
     val painter =  rememberImagePainter(
-        data =imageLink,
+        data =BuildConfig.ImageLink+imageLink,
         builder = {
+            error(R.drawable.app_logo)
                   transformations(
                       transformations
                   )
@@ -96,8 +101,11 @@ fun ImageWithLoadingProgress(
             contentDescription =null )
 
 
+
         if (painter.state is AsyncImagePainter.State.Loading)
             CircularProgressIndicator(modifier=Modifier.align(Alignment.Center))
+        else
+            content?.invoke(this)
 
 
     }
@@ -156,4 +164,22 @@ fun RatingBar(
             )
         }
     }
+}
+
+
+@Composable
+fun LoadingUiState(
+    modifier: Modifier,
+    isLoading:Boolean,
+    content:@Composable ()-> Unit
+){
+
+        Box(modifier) {
+            if (isLoading)
+                CircularProgressIndicator(Modifier.align(Alignment.Center))
+            else
+                content()
+        }
+
+
 }

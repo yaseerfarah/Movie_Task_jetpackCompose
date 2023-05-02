@@ -6,5 +6,5 @@ import com.example.moviecompose.modules.core.domain.entity.CategoryWithMoviesEnt
 interface MovieRepository {
 
     suspend fun getAllCategories():List<CategoryEntity>
-    suspend fun getAllMoviesByCategoryId(categoryModel:CategoryEntity): CategoryWithMoviesEntity?
+    suspend fun getAllMoviesByCategoryId(categoryModel:CategoryEntity): CategoryWithMoviesEntity
 }

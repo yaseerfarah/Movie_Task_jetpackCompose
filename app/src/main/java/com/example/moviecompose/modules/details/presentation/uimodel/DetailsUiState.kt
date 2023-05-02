@@ -1,3 +1,6 @@
 package com.example.moviecompose.modules.details.presentation.uimodel
 
-data class DetailsUiState(val imageUrl:String?, val errorMsg: Int?=null)
+import com.example.moviecompose.modules.core.domain.entity.CategoryEntity
+import com.example.moviecompose.modules.core.domain.entity.MovieEntity
+
+data class DetailsUiState(val movieEntity: MovieEntity?, val movieCategories:List<CategoryEntity> = listOf(), val errorMsg: Int?=null)

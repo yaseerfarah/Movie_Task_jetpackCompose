@@ -3,6 +3,7 @@ package com.example.moviecompose.core.navigation
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.moviecompose.base.presentations.navigation.NavigationCoordinator
+import com.example.moviecompose.modules.core.domain.entity.MovieEntity
 import com.example.moviecompose.modules.details.presentation.navigation.DetailsFlow
 import com.example.moviecompose.modules.details.presentation.view.DetailsScreen
 import com.example.moviecompose.modules.home.presentation.navigation.HomeFlow
@@ -19,8 +20,8 @@ class MainFlowNavigation @Inject constructor(){
         this.navController = navController
     }
 
-    fun openDetailsScreen(movieId:String?) {
-        navController.navigate(DetailsFlow.Root.route(movieId))
+    fun openDetailsScreen(movieEntity: MovieEntity) {
+        navController.navigate(DetailsFlow.Root.route(movieEntity))
     }
 
     fun onDetailsBackPress() {

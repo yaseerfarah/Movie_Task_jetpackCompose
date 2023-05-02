@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieCompose</string>
+    <string name="went_wrong">Something went wrong</string>
 </resources>

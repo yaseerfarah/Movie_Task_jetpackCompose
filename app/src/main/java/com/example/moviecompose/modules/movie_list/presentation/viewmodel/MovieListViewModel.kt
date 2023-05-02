@@ -1,64 +1,67 @@
 package com.example.moviecompose.modules.movie_list.presentation.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.example.moviecompose.R
 import com.example.moviecompose.base.presentations.viewmodel.StateViewModel
 import com.example.moviecompose.core.navigation.MainNavigationCoordinator
 import com.example.moviecompose.core.navigation.MainNavigationEvent
+import com.example.moviecompose.modules.core.domain.entity.CategoryEntity
+import com.example.moviecompose.modules.core.domain.entity.MovieEntity
 import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUIEffects
+import com.example.moviecompose.modules.movie_list.domain.interactore.GetMoviesByCategoryUseCase
 import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUIEvents
-import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiModel
-import com.example.moviecompose.modules.home.presentation.uimodel.MovieListUiState
+import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUiModel
+import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val mainNavigationCoordinator: MainNavigationCoordinator,
+    private val getMoviesByCategoryUseCase: GetMoviesByCategoryUseCase,
 
 ):
-    StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects, MovieListUIEvents>(MovieListUiState(screensCount = 3,
-        currentData = null, loadContents = true
-    )) {
+    StateViewModel<MovieListUiModel, MovieListUiState, MovieListUIEffects, MovieListUIEvents>(
+        MovieListUiState(loading = true)
+    ) {
 
 
 
 
     override fun sendEvent(event: MovieListUIEvents) {
         when(event){
-            is MovieListUIEvents.getData->{getData(event.page) }
-            is MovieListUIEvents.navigateToDetailsScreen->{mainNavigationCoordinator.onEvent(
-                MainNavigationEvent.NavigateToDetailsScreen(event.imageLink)
-            )}
-            else -> {}
+            is MovieListUIEvents.GetMoviesList->{getMoviesList(event.categoryEntity) }
+            is MovieListUIEvents.NavigateToDetailsScreen->{mainNavigationCoordinator.onEvent(MainNavigationEvent.NavigateToDetailsScreen(event.movieEntity))}
+
         }
     }
 
     override fun mapStateToUIModel(oldState: MovieListUiState, newState: MovieListUiState): MovieListUiModel {
         return  with(newState){
             MovieListUiModel(
-                screensCount=screensCount,
+                loading=loading,
                 currentData=currentData,
-                loadContents=loadContents,
                 errorMsg=errorMsg
             )
         }
     }
 
-    private fun getData(currentScreen:Int){
-        Log.e("currentScreen","currentScreen=$currentScreen")
-        when(currentScreen){
-            0 -> {
-                updateState(state.copy(currentData = "https://cdn.pixabay.com/photo/2019/03/03/20/23/background-4032775__340.png"))
+    private fun getMoviesList(categoryEntity:CategoryEntity){
+
+        viewModelScope.launch(Dispatchers.Default) {
+            try {
+                val moviesList =  withContext<List<MovieEntity>>(Dispatchers.IO){ getMoviesByCategoryUseCase(categoryEntity).moviesList }
+                updateState(state.copy(loading = false, currentData = moviesList))
+            }catch (e:Throwable){
+                updateState(state.copy(loading = false, errorMsg = R.string.went_wrong))
             }
 
-            1 -> {
-                updateState(state.copy(currentData = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmlZY0r2C5TVF0CDxh-RkRcrTowRx-o4bKgA&usqp=CAU"))
-            }
-
-            2 -> {
-                updateState(state.copy(currentData = "https://media.istockphoto.com/id/1064527936/vector/blue-ultraviolet-neon-curved-lines-abstract-background.jpg?s=612x612&w=0&k=20&c=DVl-_bo2HZU0tVqzp1FufxssO2BoPsRNb2W0LuzoEuc="))
-            }
         }
+
         }
     }
 

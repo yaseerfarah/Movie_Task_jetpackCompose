@@ -45,31 +45,30 @@ class MovieRoomSource @Inject constructor(
         return categoryWithMovieDaoRoom.getAllMovies().map { it.toMovieEntity() }
     }
 
+    suspend fun getAllMoviesByCategoryId(categoryEntity: CategoryEntity):CategoryWithMoviesEntity{
+        return categoryWithMovieDaoRoom.getAllMoviesByCategoryId(categoryEntity.id).toCategoryWithMoviesEntity()
+    }
 
 
-    private suspend fun saveAllMoviesWithCategoryId(listOfMovieModels:List<MovieEntity>,categoryId:Int){
+
+     suspend fun saveAllMoviesWithCategoryId(listOfMovieModels:List<MovieEntity>,categoryId:Int){
         coroutineScope {
-            val job=Job()
+
             listOfMovieModels.map {
-                launch(job) {
+                async  {
                     categoryWithMovieDaoRoom.insertMovie(it.toMovieDto())
                     categoryWithMovieDaoRoom.insertCategoryMoviePair(CategoryMoviePairDto(categoryId = categoryId,movieId = it.id))
                 }
-            }
-            job.join()
+            }.awaitAll()
+
         }
 
     }
 
 
-    private suspend fun saveAllCategories(listOfCategoryModel:List<CategoryEntity>){
-        coroutineScope {
-            val job=Job()
-            listOfCategoryModel.map {
-                launch(job) { categoryWithMovieDaoRoom.insertCategory(it.toCategoryDto()) }
-            }
-            job.join()
-        }
+     suspend fun saveAllCategories(listOfCategoryModel:List<CategoryEntity>){
+        categoryWithMovieDaoRoom.saveCategories(listOfCategoryModel.map { it.toCategoryDto() })
     }
+
 
 }

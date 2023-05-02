@@ -21,32 +21,26 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.example.moviecompose.R
 import com.example.moviecompose.base.presentations.view.ImageWithLoadingProgress
+import com.example.moviecompose.modules.core.domain.entity.MovieEntity
 
 
 @ExperimentalMaterial3Api
 @Composable
 fun MovieItem(
     modifier: Modifier,
-    imageLink:String?,
-    onClick: (String?)->Unit
+    movieEntity: MovieEntity,
+    onClick: (MovieEntity)->Unit
 ) {
-    val painter =  rememberImagePainter(
-        data =imageLink,
-        builder = {
 
+        ImageWithLoadingProgress(
+            modifier = modifier
+            .heightIn(min = 150.dp, max = 150.dp)
+            .clickable(onClick = { onClick.invoke(movieEntity) }), imageLink = movieEntity.poster_path){
+            Text(text=movieEntity.title, modifier = Modifier.align(Alignment.BottomCenter))
         }
 
-    )
 
-    Box(
-        modifier = modifier
-            .heightIn(min = 150.dp, max = 150.dp)
-            .clickable(onClick = { onClick.invoke(imageLink) })
-    ) {
-        ImageWithLoadingProgress(modifier = Modifier.fillMaxSize(), imageLink = imageLink)
-        Text("This text is drawn first", modifier = Modifier.align(Alignment.BottomCenter))
 
-    }
 
 
 

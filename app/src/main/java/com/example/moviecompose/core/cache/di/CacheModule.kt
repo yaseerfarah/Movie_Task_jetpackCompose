@@ -8,6 +8,7 @@ import com.example.moviecompose.core.cache.database.remote.ApiEndpoints
 import com.example.moviecompose.core.cache.database.remote.NetworkConnectionInterceptor
 import com.example.moviecompose.core.cache.source.MovieRoomLocalDs
 import com.google.gson.GsonBuilder
+import com.yasser.movie_app_task.Data.Local.CategoryWithMovieDaoRoom
 import com.yasser.movie_app_task.Data.Local.MainRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -68,6 +69,14 @@ import javax.inject.Singleton
     fun sharedPrefs(@ApplicationContext context: Context):DataStoreHelper{
         return DataStoreHelper(context)
     }
+
+
+    @Provides
+    @Singleton
+    fun provideCategoryWithMovieDao(roomDatabase: MainRoomDatabase): CategoryWithMovieDaoRoom {
+        return roomDatabase.categoryWithMovieDao()
+    }
+
 
 
     @Provides

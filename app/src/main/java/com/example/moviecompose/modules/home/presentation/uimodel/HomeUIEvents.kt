@@ -4,6 +4,6 @@ import com.example.moviecompose.modules.movie_list.presentation.uimodel.MovieLis
 
 sealed class HomeUIEvents{
 
-data class OnPageChange(val page:Int): HomeUIEvents()
+object GetAllCategories: HomeUIEvents()
 
 }

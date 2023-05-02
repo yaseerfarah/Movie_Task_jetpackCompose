@@ -19,7 +19,7 @@ import javax.inject.Singleton
      override fun onEvent(event: MainNavigationEvent) {
         when(event){
             is MainNavigationEvent.NavigateBackToHome->{mainFlowNavigation.onDetailsBackPress()}
-            is MainNavigationEvent.NavigateToDetailsScreen->{mainFlowNavigation.openDetailsScreen(event.movieId)}
+            is MainNavigationEvent.NavigateToDetailsScreen->{mainFlowNavigation.openDetailsScreen(event.movieEntity)}
         }
      }
 

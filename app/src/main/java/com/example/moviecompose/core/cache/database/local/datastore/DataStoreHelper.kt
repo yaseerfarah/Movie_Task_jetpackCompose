@@ -21,7 +21,8 @@ class DataStoreHelper(private val context: Context) {
         const val SHARED_PREFS_NAME = "UP_Data"
          const val HOURS_UNTIL_PROMPT = 4
          const val MILLIS_UNTIL_PROMPT = HOURS_UNTIL_PROMPT  * 60 * 60 * 1000
-          val LAST_UPDATE = longPreferencesKey("LAST_UP")
+          fun lastUpdateKey(id:String):Preferences.Key<Long> = longPreferencesKey("LAST_UP-${id}")
+
     }
 
 

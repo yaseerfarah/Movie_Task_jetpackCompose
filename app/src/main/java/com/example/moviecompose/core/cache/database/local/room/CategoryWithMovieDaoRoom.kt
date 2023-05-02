@@ -13,6 +13,9 @@ interface CategoryWithMovieDaoRoom {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(categoryModel: CategoryDto)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveCategories(categoryModels: List<CategoryDto>)
+
     @Query("SELECT * FROM Categories")
     suspend fun getAllCategories():List<CategoryDto>
 
@@ -25,8 +28,15 @@ interface CategoryWithMovieDaoRoom {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movieModel: MovieDto)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveMovies(movieModels: List<MovieDto>)
+
     @Query("SELECT * FROM Movies")
     suspend fun getAllMovies():List<MovieDto>
+
+
+    @Query("SELECT * FROM Categories WHERE id Like :categoryId")
+    suspend fun getAllMoviesByCategoryId(categoryId:Int):CategoryWithMoviesDto
 
 
     @Query("DELETE  FROM Movies")

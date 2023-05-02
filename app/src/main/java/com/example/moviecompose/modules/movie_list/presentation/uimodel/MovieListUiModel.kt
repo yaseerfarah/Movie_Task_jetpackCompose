@@ -1,3 +1,5 @@
-package com.example.moviecompose.modules.home.presentation.uimodel
+package com.example.moviecompose.modules.movie_list.presentation.uimodel
 
-data class MovieListUiModel(val screensCount:Int, val currentData:String?, val loadContents:Boolean, val errorMsg: Int?=null)
+import com.example.moviecompose.modules.core.domain.entity.MovieEntity
+
+data class MovieListUiModel(val loading:Boolean,val currentData:List<MovieEntity>, val errorMsg: Int?=null)
