@@ -58,6 +58,9 @@ class MovieListViewModel @Inject constructor(
             2 -> {
                 updateState(state.copy(currentData = "https://media.istockphoto.com/id/1064527936/vector/blue-ultraviolet-neon-curved-lines-abstract-background.jpg?s=612x612&w=0&k=20&c=DVl-_bo2HZU0tVqzp1FufxssO2BoPsRNb2W0LuzoEuc="))
             }
+            else->{
+                updateState(state.copy(currentData = "https://cdn.pixabay.com/photo/2019/03/03/20/23/background-4032775__340.png"))
+            }
         }
         }
     }
