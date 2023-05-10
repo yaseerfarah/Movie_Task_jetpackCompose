@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.moviecompose.R
@@ -56,7 +57,7 @@ fun HomeScreen(
 
 
 
-           TabRow(
+           ScrollableTabRow(
                selectedTabIndex = tabIndex,
                indicator = { tabPositions ->
                    TabRowDefaults.Indicator(
@@ -64,7 +65,8 @@ fun HomeScreen(
                        color = Color.White
                    )
                },
-               containerColor = Color.Red
+               containerColor = Color.Red,
+               edgePadding = 0.dp
            ) {
                uiModel.value.tabList.forEachIndexed { index, pair ->
                    Tab(selected = tabIndex == index, onClick = {

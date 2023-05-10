@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(@ApplicationContext context: Context,val mainNavigationCoordinator: MainNavigationCoordinator):
-    StateViewModel<HomeUiModel, HomeUiState, HomeUIEffects,HomeUIEvents>(HomeUiState(tabList = listOf("First","Second","Third"))) {
+    StateViewModel<HomeUiModel, HomeUiState, HomeUIEffects,HomeUIEvents>(HomeUiState(tabList = listOf("1","2","3","4","5","6","7","8","10","11","12","13","14","15"))) {
 
 
 
