@@ -44,8 +44,11 @@ android {
 
         release {
             initWith buildTypes.debug
+            minifyEnabled true
+            shrinkResources true
             splits.abi.enable = true
             splits.density.enable = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'debug']
         }
     }
