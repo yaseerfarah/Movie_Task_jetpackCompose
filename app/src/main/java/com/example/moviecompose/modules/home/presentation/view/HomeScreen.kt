@@ -1,7 +1,10 @@
 package com.example.moviecompose.modules.home.presentation.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -18,14 +21,11 @@ import com.example.moviecompose.modules.home.presentation.uimodel.HomeUIEvents
 import com.example.moviecompose.modules.home.presentation.viewmodel.HomeViewModel
 import com.example.moviecompose.modules.movie_list.presentation.view.MovieListScreen
 import com.example.moviecompose.modules.movie_list.presentation.viewmodel.MovieListInjectionProvider
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
-@OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
@@ -104,7 +104,12 @@ fun HomeScreen(
                    }
                }
 
-               HorizontalPager(modifier = Modifier.weight(weight = 1f),count = uiModel.value.tabList.count(), state = pagerState) { page ->
+               HorizontalPager(
+                   modifier = Modifier.weight(weight = 1f),
+                   pageCount = uiModel.value.tabList.count(),
+                   state = pagerState, key = {uiModel.value.tabList[it].id},
+                   beyondBoundsPageCount = 1
+               ) { page ->
                    MovieListScreen(
                        categoryEntity = uiModel.value.tabList[page],
                        movieListInjectionProvider=movieListInjectionProvider

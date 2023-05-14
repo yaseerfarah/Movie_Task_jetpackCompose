@@ -35,10 +35,6 @@ import com.example.moviecompose.base.presentations.view.RoundIcon
 import com.example.moviecompose.modules.details.presentation.uimodel.DetailsUIEvents
 import com.example.moviecompose.modules.details.presentation.uimodel.DetailsUiModel
 import com.example.moviecompose.modules.details.presentation.viewmodel.DetailsViewModel
-import com.example.moviecompose.modules.home.presentation.viewmodel.HomeViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
 

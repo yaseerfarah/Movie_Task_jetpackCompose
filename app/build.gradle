@@ -44,8 +44,11 @@ android {
 
         release {
             initWith buildTypes.debug
+            minifyEnabled true
+            shrinkResources true
             splits.abi.enable = true
             splits.density.enable = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'debug']
         }
     }
@@ -127,7 +130,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-beta01"
 
 
-    implementation "com.google.accompanist:accompanist-pager:0.28.0"
+//    implementation "com.google.accompanist:accompanist-pager:0.28.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.28.0"
 
     //Coil
