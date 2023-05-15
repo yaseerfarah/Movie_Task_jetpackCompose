@@ -52,18 +52,22 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    private fun getMoviesList(categoryEntity:CategoryEntity){
+    private fun getMoviesList(categoryEntity:CategoryEntity) {
+        if (state.currentData.isEmpty()) {
+            updateState(MovieListUiState(loading = true))
+            viewModelScope.launch(Dispatchers.Default) {
+                try {
+                    val moviesList = withContext<List<MovieEntity>>(Dispatchers.IO) {
+                        getMoviesByCategoryUseCase(categoryEntity).moviesList
+                    }
+                    updateState(state.copy(loading = false, currentData = moviesList))
+                } catch (e: Throwable) {
+                    updateState(state.copy(loading = false, errorMsg = R.string.went_wrong))
+                }
 
-        viewModelScope.launch(Dispatchers.Default) {
-            try {
-                val moviesList =  withContext<List<MovieEntity>>(Dispatchers.IO){ getMoviesByCategoryUseCase(categoryEntity).moviesList }
-                updateState(state.copy(loading = false, currentData = moviesList))
-            }catch (e:Throwable){
-                updateState(state.copy(loading = false, errorMsg = R.string.went_wrong))
             }
 
         }
-
-        }
+    }
     }
 

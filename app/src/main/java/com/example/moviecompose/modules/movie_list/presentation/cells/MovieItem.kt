@@ -35,7 +35,8 @@ fun MovieItem(
         ImageWithLoadingProgress(
             modifier = modifier
             .heightIn(min = 150.dp, max = 150.dp)
-            .clickable(onClick = { onClick.invoke(movieEntity) }), imageLink = movieEntity.poster_path){
+            .clickable(onClick = { onClick.invoke(movieEntity) }), imageLink = movieEntity.poster_path,
+            isGradientBackgroundEnable = true){
             Text(text=movieEntity.title, modifier = Modifier.align(Alignment.BottomCenter))
         }
 

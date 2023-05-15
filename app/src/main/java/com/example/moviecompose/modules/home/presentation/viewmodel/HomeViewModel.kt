@@ -47,16 +47,20 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun getAllCategories(){
-        updateState(state.copy(loading = true))
-        viewModelScope.launch(Dispatchers.Default) {
-            try {
-                val categories =  withContext<List<CategoryEntity>>(Dispatchers.IO){ getAllCategoriesUseCase(Unit) }
-                updateState(state.copy(loading = false,tabList = categories))
-            }catch (e:Throwable){
-                updateState(state.copy(loading = false, errorMsg = R.string.went_wrong))
-            }
+    private fun getAllCategories() {
+        if (state.tabList.isEmpty()) {
+            updateState(state.copy(loading = true))
+            viewModelScope.launch(Dispatchers.Default) {
+                try {
+                    val categories = withContext<List<CategoryEntity>>(Dispatchers.IO) {
+                        getAllCategoriesUseCase(Unit)
+                    }
+                    updateState(state.copy(loading = false, tabList = categories))
+                } catch (e: Throwable) {
+                    updateState(state.copy(loading = false, errorMsg = R.string.went_wrong))
+                }
 
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -79,6 +80,7 @@ fun ImageWithLoadingProgress(
     modifier: Modifier=Modifier,
     imageLink:String?,
     transformations: List<Transformation> = listOf(),
+    isGradientBackgroundEnable:Boolean=false,
     content:(@Composable BoxScope.()->Unit)?=null
 ) {
 
@@ -100,6 +102,10 @@ fun ImageWithLoadingProgress(
             contentScale = ContentScale.Crop,
             contentDescription =null )
 
+        if(isGradientBackgroundEnable)
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Black))))
 
 
         if (painter.state is AsyncImagePainter.State.Loading)

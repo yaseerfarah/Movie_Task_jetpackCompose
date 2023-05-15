@@ -19,10 +19,7 @@ fun NavGraphBuilder.DetailsNavHost(navController: NavHostController) {
         route = DetailsFlow.Root.route
     ) {
         composable(route = DetailsFlow.DetailsScreen.route, arguments = DetailsFlow.DetailsScreen.arguments) {
-            val viewModel = hiltViewModel<DetailsViewModel>()
-            DetailsScreen(
-                viewModel = viewModel,
-            )
+            DetailsScreen()
         }
     }
 }

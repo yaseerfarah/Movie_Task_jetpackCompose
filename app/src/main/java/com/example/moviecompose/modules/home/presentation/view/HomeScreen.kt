@@ -1,6 +1,7 @@
 package com.example.moviecompose.modules.home.presentation.view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -29,18 +30,24 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel,
-    callNextScreen:()->Unit
+    viewModel: HomeViewModel=hiltViewModel<HomeViewModel>()
 ) {
     
     val uiModel=viewModel.uiModel.collectAsStateWithLifecycle()
     val movieListInjectionProvider = hiltViewModel<MovieListInjectionProvider>()
     val pagerState= rememberPagerState()
     val coroutineScope= rememberCoroutineScope()
-    val tabIndex = pagerState.currentPage
 
-    LaunchedEffect(viewModel){
+
+    LaunchedEffect(key1 =viewModel){
         viewModel.sendEvent(HomeUIEvents.GetAllCategories)
+    }
+    DisposableEffect(key1 = viewModel){
+        Log.e("HomeScreenView","${viewModel.hashCode()}")
+
+        onDispose {
+            Log.e("HomeScreenView","onDispose >>>> ${viewModel.hashCode()}")
+        }
     }
 
 
@@ -83,10 +90,10 @@ fun HomeScreen(
 
 
                ScrollableTabRow(
-                   selectedTabIndex = tabIndex,
+                   selectedTabIndex = pagerState.currentPage,
                    indicator = { tabPositions ->
                        TabRowDefaults.Indicator(
-                           Modifier.tabIndicatorOffset(tabPositions[tabIndex]),
+                           Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
                            color = Color.White
                        )
                    },
@@ -94,7 +101,7 @@ fun HomeScreen(
                    edgePadding = 0.dp
                ) {
                    uiModel.value.tabList.forEachIndexed { index, pair ->
-                       Tab(selected = tabIndex == index, onClick = {
+                       Tab(selected = pagerState.currentPage == index, onClick = {
                            coroutineScope.launch {
                                pagerState.animateScrollToPage(index)
                            }
@@ -108,7 +115,7 @@ fun HomeScreen(
                    modifier = Modifier.weight(weight = 1f),
                    pageCount = uiModel.value.tabList.count(),
                    state = pagerState, key = {uiModel.value.tabList[it].id},
-                   beyondBoundsPageCount = 1
+                   beyondBoundsPageCount = 0
                ) { page ->
                    MovieListScreen(
                        categoryEntity = uiModel.value.tabList[page],

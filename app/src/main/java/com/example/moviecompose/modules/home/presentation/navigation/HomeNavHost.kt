@@ -18,13 +18,7 @@ fun NavGraphBuilder.HomeNavHost(navController: NavHostController) {
         route = HomeFlow.Root.route
     ) {
         composable(route = HomeFlow.MainScreen.route) {
-            val viewModel = hiltViewModel<HomeViewModel>()
-            HomeScreen(
-                viewModel = viewModel,
-                callNextScreen = {
-
-                }
-            )
+            HomeScreen()
         }
     }
 }

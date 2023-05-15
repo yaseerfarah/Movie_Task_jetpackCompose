@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.transform.RoundedCornersTransformation
 import com.example.moviecompose.R
@@ -42,7 +43,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsViewModel,
+    viewModel: DetailsViewModel= hiltViewModel(),
 ) {
     
     val uiModel=viewModel.uiModel.collectAsStateWithLifecycle()
@@ -61,8 +62,8 @@ fun DetailsScreen(
 
         ContentLayout(
             modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 250.dp),
+                .fillMaxSize()
+                .padding(top = 250.dp),
         detailsUiModel = uiModel.value)
         
         
@@ -80,12 +81,8 @@ fun HeaderLayout(modifier:Modifier,imageUrl:String?,backgroundImageUrl:String?,o
 
 
         ImageWithLoadingProgress(modifier = Modifier.fillMaxSize(), imageLink = backgroundImageUrl?:imageUrl,
-            transformations = listOf())
+            transformations = listOf(), isGradientBackgroundEnable = true)
 
-
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Brush.verticalGradient(colors = listOf(Color.Transparent, Color.Black))))
 
 
         ImageWithLoadingProgress(modifier = Modifier
@@ -96,7 +93,8 @@ fun HeaderLayout(modifier:Modifier,imageUrl:String?,backgroundImageUrl:String?,o
         RoundIcon(modifier = Modifier
             .padding(all = 20.dp)
             .size(width = 48.dp, height = 48.dp)
-            .align(Alignment.TopStart).clickable(onClick = onBackClick), painter = Icons.Default.ArrowBack)
+            .align(Alignment.TopStart)
+            .clickable(onClick = onBackClick), painter = Icons.Default.ArrowBack)
 
 
         
