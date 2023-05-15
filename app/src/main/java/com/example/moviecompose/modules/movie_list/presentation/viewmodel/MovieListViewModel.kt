@@ -1,6 +1,8 @@
 package com.example.moviecompose.modules.movie_list.presentation.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.viewModelScope
 import com.example.moviecompose.R
 import com.example.moviecompose.base.presentations.viewmodel.StateViewModel
@@ -18,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
+@Immutable
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
     private val mainNavigationCoordinator: MainNavigationCoordinator,

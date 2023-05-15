@@ -1,6 +1,8 @@
 package com.example.moviecompose.modules.details.presentation.viewmodel
 
 import android.content.Context
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.moviecompose.R
@@ -23,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
+@Immutable
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     @ApplicationContext context: Context,
